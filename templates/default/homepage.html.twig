@@ -1,0 +1,295 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block body %}
+{# {% block importmap %}   #}
+  {# {{ asset ('vue') }} #}
+
+ {# {{ encore_entry_link_tags ('main') }}  #}
+
+<style >
+
+
+a 
+{
+	color:rgba( 255, 255, 255, .65 );
+	text-decoration: none;
+}
+
+a:hover
+{
+	color:rgba( 255, 255, 255, 1 );
+}
+
+/* hardware accelatator class */	
+.trans3d
+	{
+		-webkit-transform-style: preserve-3d;
+		-webkit-transform: translate3d(0, 0, 0);
+		-moz-transform-style: preserve-3d;
+		-moz-transform: translate3d(0, 0, 0);
+		-ms-transform-style:preserve-3d;
+		-ms-transform: translate3d(0, 0, 0);
+		transform-style:preserve-3d;
+		transform: translate3d(0, 0, 0);
+
+	/*	-webkit-backface-visibility: hidden;
+		-moz-backface-visibility: hidden;
+		-ms-backface-visibility:hidden;
+		backface-visibility:hidden;*/
+	}
+	
+ .carouselItemInner .container-fluid .contentContainer
+	{
+	
+		width:80vh;
+    height:100vh;
+		padding:10%;
+
+    margin-top: 15vh;
+   
+	}
+
+	.contentContainer
+	{
+		position:absolute;
+		margin-left:-500px;
+		margin-top:-500px;
+		left:50%;
+		top:50%;
+		width:1000px;
+		height:550px;
+   
+	}
+	
+	#carouselContainer
+	{
+		position:absolute;
+		margin-left:-700px;
+		margin-top:-450px;
+		left:50%;
+		top:60%;
+		width:1200px;
+		height:600px;
+	}
+	
+	.carouselItem
+	{
+		width:400px;
+		height:380px;
+		position:absolute;
+		left:50%;
+		top:50%;
+		margin-left:-120px;
+		margin-top:90px;
+		visibility:hidden;
+	}
+	
+  .carouselItemInner 
+	{
+    width: 400px;
+		height:380px;
+		position:absolute;
+		border:3px solid rgba(255, 255, 255, .5);
+    border-radius: 10px 10px 10px 10px;
+		left:50%;
+		top:50%;
+		margin-left:-120px;
+		margin-top:90px;	
+    overflow:hidden;
+  }
+  .carouselItemInner .title 
+	{
+    display: flex;
+   justify-items: center;
+   vertical-align: center;
+
+    justify-content: center;
+			font-family: 'quicksandlight', Helvetica, Arial;
+	 font-style: white;
+	text-shadow: -1px -1px 4px rgba(0, 0, 0, .35);
+    filter: dropshadow(color=#000000, offx=1, offy=1);
+		
+		text-align:center;
+		
+  }
+
+</style>
+
+
+<main class="carouselItemInner container-fluid contentContainer position-relative " >
+	<div id="contentContainer" class="trans3d"> 
+	<section id="carouselContainer" class="trans3d">
+ {% for categorie in categories %}
+		<figure id="item" class="carouselItem trans3d">
+        
+          <img class="carouselItemInner trans3d" src="{{ asset(categorie.image) }}"><a class="carouselItemInner  title">{{ (categorie.libelle) }}</a> </figure>
+
+
+ {% endfor %} 
+	 	</section> 
+  </div>
+</main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.1/TweenMax.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script style="ts">
+// set and cache variables
+var w, container, carousel, item, itemLength, rY, ticker; 
+var rotationY = 0;
+var addX = 0;
+
+$(document).ready(init);
+
+function init()
+{
+    w = $(window);
+    container = $('#contentContainer');
+    carousel = $('#carouselContainer');
+    item = $('.carouselItem');
+
+    itemLength = $('.carouselItem').length;
+
+    rY = 360 / itemLength;
+    radius = Math.round((180) / Math.tan(Math.PI / itemLength));
+
+    // set container 3d props
+    TweenMax.set(container, {perspective: 5000});
+    TweenMax.set(carousel, {z: -(radius)});
+    
+    // create carousel item props
+    for (var i = 0; i < itemLength; i++)
+    {
+        var $item = item.eq(i);
+        var $block = $item.find('.carouselItemInner');
+        
+        //thanks @chrisgannon!        
+        TweenMax.set($item, {rotationY: rY * i, z: radius, transformOrigin: "50% 50% " + -radius + "px"});
+        animateIn($item, $block);
+    }
+    
+    // set looper ticker
+    ticker = setInterval(looper, 1000 / 60); // 60 FPS
+}
+
+function animateIn($item, $block)
+{
+    var $nrX = 360 * getRandomInt(2);
+    var $nrY = 360 * getRandomInt(2);
+        
+    var $nx = -(2000) + getRandomInt(4000);
+    var $ny = -(2000) + getRandomInt(4000);
+    var $nz = -2000 + getRandomInt(2000);
+        
+    var $s = 1.5 + (getRandomInt(10) * .1);
+    var $d = 1 - (getRandomInt(8) * .1);
+    
+    TweenMax.set($item, {autoAlpha: 1, delay: $d});
+    TweenMax.set($block, {z: $nz, rotationY: $nrY, rotationX: $nrX, x: $nx, y: $ny, autoAlpha: 0});
+    TweenMax.to($block, $s, {delay: $d, rotationY: 0, rotationX: 0, z: 0, ease: Expo.easeInOut});
+    TweenMax.to($block, $s - .5, {delay: $d, x: 0, y: 0, autoAlpha: 1, ease: Expo.easeInOut});
+}
+
+// loops and sets the carousel 3d properties
+function looper()
+{
+    rotationY += 0.2; // Change this value to control the rotation speed
+    TweenMax.to(carousel, 1, {rotationY: rotationY, ease: Quint.easeOut});
+}
+
+function getRandomInt($n)
+{
+    return Math.floor((Math.random() * $n) + 1);	
+}
+</script>
+
+
+ {% endblock %}  
+
+
+          {# <img src="image/category/asian_food_cat.jpg">
+          <img src="image/category/burger_cat.jpg">
+          <img src="image/category/pizza_cat.jpg">
+          <img src="image/category/wrap_cat.jpg">
+          <img src="image/category/veggie_cat.jpg">
+        {# ; #}
+            {# <img src="{{ asset(categorie.image) }}">  
+           </div>
+           
+               </div>
+ <div class="swiper-button-prev"></div>
+			<div class="swiper-button-next"></div>
+			<div class="swiper-pagination" style="bottom: -50px;"></div>
+
+</div> 
+
+{# {% extends 'base.html.twig' %}
+
+{% block body %}
+{% block title %}The District{% endblock %}
+
+
+
+
+<div id="app">
+{% for categorie in categories %}
+
+
+  <splide :options="coverflow">
+    <splide-slide>
+<img src="{{ asset (categorie.image)}}">
+    </splide-slide>
+  </splide>
+
+
+       
+
+{% endfor %}
+
+</div>
+
+{# import '@splidejs/splide/dist/css/themes/splide-default.min.css'<script> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.1/TweenMax.min.js"></script>
+
+<script>
+ const carousel3Dswiper = 
+new Swiper("carousel-3D-swiper", {
+loop: true,
+    effect: "coverflow",
+        grabCursor: true,
+            centeredSlides: true,
+                slidesPerView: 3,
+                    coverflowEffect: {
+    rotate: 0,
+        stretch: 0,
+            depth: 350,
+                modifier: 1,
+                    slideShadows: true
+},
+navigation: {
+    nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+    },
+pagination: {
+    el: ".swiper-pagination"
+}
+});
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+  {# export default { 
+    data() {
+      return {
+        options: {
+          rewind : true,
+          width  : 800,
+          gap    : '1rem',
+        },
+      };
+    },
+  } #}
+
+
+
+
+

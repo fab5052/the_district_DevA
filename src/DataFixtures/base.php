@@ -1,6 +1,5 @@
 <?php
 
-
 $categorie = array(
   array('libelle' => 'Pizza','image' => 'image/category/pizza_cat.jpg','active' => 'Yes'),
   array('libelle' => 'Burger','image' => 'image/category/burger_cat.jpg','active' => 'No'),

@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-class AccueilController extends AbstractController
+class CategorieController extends AbstractController
 {
     private $categorieRepo;
     // private $platRepo;
@@ -20,19 +20,25 @@ class AccueilController extends AbstractController
         
     }
 
-
-    #[Route('/accueil', name: 'app_accueil')]
+    #[Route('/categorie', name: 'app_categorie')]
     public function index(): Response
     {
-
         $categories = $this->categorieRepo->findAll();
         // $plats = $this->platRepo->findAll();
 
-        return $this->render('accueil/index.html.twig', [
-            'controller_name' => 'AccueilController',
+        return $this->render('categorie/index.html.twig', [
+            'controller_name' => 'CategorieController',
 
             'categories' => $categories
             // 'plats'=> $plats
         ]);
     }
 }
+
+
+
+
+
+
+
+

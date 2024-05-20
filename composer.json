@@ -4,27 +4,22 @@
         "core-js": "^3.0.0",
         "webpack-notifier": "^1.6.0"
     },
-    "license": "UNLICENSED",
     "private": true,
-    "scripts": {
-        "dev-server": "encore dev-server",
-        "dev": "encore dev",
-        "watch": "encore dev --watch",
-        "build": "encore production --progress"
-    },
     "type": "project",
     "license": "proprietary",
     "minimum-stability": "stable",
-    "prefer-stable": false,
+    "prefer-stable": true,
     "require": {
         "php": ">=8.1",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "botble/dev-tool": "^1.0",
+        "doctrine/annotations": "^2.0",
         "doctrine/dbal": "^3",
         "doctrine/doctrine-bundle": "^2.12",
         "doctrine/doctrine-migrations-bundle": "^3.3",
         "doctrine/orm": "^3.1",
+        "firebase/php-jwt": "^6.10",
         "javiereguiluz/easyslugger": "^1.0",
         "phpdocumentor/reflection-docblock": "^5.3",
         "phpstan/phpdoc-parser": "^1.28",
@@ -39,6 +34,7 @@
         "symfony/flex": "^2.4",
         "symfony/form": "6.4.*",
         "symfony/framework-bundle": "6.4.*",
+        "symfony/html-sanitizer": "6.4.*",
         "symfony/http-client": "6.4.*",
         "symfony/intl": "6.4.*",
         "symfony/mailer": "6.4.*",
@@ -63,11 +59,13 @@
         "symfony/web-link": "6.4.*",
         "symfony/webpack-encore-bundle": "^2.1",
         "symfony/yaml": "6.4.*",
+        "symfonycasts/sass-bundle": "*",
         "symfonycasts/verify-email-bundle": "*",
         "twig/extra-bundle": "^2.12|^3.0",
         "twig/twig": "^2.12|^3.0",
         "web-auth/webauthn-stimulus": "^4.8",
-        "web-auth/webauthn-symfony-bundle": "^4.8"
+        "web-auth/webauthn-symfony-bundle": "^4.8",
+        "web-token/jwt-library": "^3.4"
     },
     "config": {
         "allow-plugins": {
@@ -97,10 +95,11 @@
         "symfony/polyfill-php81": "*"
     },
     "scripts": {
-        "auto-scripts": {
+		"auto-scripts": {
             "cache:clear": "symfony-cmd",
-            "assets:install %PUBLIC_DIR%": "symfony-cmd",
-            "importmap:install": "symfony-cmd"
+            "assets:install %PUBLIC_DIR%":     "symfony-cmd",
+            "importmap:install": "symfony-cmd",
+            "sass:build": "symfony-cmd"
         },
         "post-install-cmd": [
             "@auto-scripts"
@@ -113,8 +112,22 @@
             "php bin/console d:d:c",
             "php bin/console d:s:u --force --complete",
             "php bin/console d:f:l --append"
+        ],
+    
+        "dev-server": [
+            "encore dev-server"
+        ],
+        "dev": [
+            "encore dev"
+        ],
+        "watch": [
+            "encore dev --watch"
+        ],
+        "build": [
+            "encore production --progress"
         ]
-    },
+                    
+   },
     "conflict": {
         "symfony/symfony": "*"
     },

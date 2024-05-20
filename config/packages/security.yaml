@@ -26,41 +26,52 @@ security:
             provider: app_user_provider
             # custom_authenticator: App\Security\UserAuthenticator
             #target: required_badges
-            #enable_csrf: true
-            logout:
-                path: app_logout
-                # where to redirect after logout
-            #custom_authenticator:
-           
-              
+            #enable_csrf: true # This allows the user to login by submitting a username and password
+            # Reference: https://symfony.com/doc/current/security/form_login_setup.html
+            form_login:
+                # The route name that the login form submits to
+                check_path: security_login
+                # The name of the route where the login form lives
+                # When the user tries to access a protected page, they are redirected here
+                login_path: security_login
+                # Secure the login form against CSRF
+                # Reference: https://symfony.com/doc/current/security/csrf.html
+                enable_csrf: true
+                # The page users are redirect to when there is no previous page stored in the
+                # session (for example when the users access directly to the login page).
+                default_target_path: homepage_index
 
+            # This option allows users to choose to stay logged in for longer than
+            # the session lasts using a cookie. Reference: https://symfony.com/doc/current/security/remember_me.html
             remember_me:
-                secret: '%kernel.secret%'
-                lifetime: 604800
-                path: /
-                #always_remember_me: true
-            # form_login:
-                
+                secret:   '%kernel.secret%' # required
+                lifetime: 604800 # 1 week in seconds
                 # by default, the feature is enabled by checking a checkbox in the
-                # login form, uncomment the following line to always enable it.
-            #always_remember_me: true
+                # login form , uncomment the following line to always enable it.
+                #always_remember_me: true
 
-            # activate different ways to authenticate
-            # https://symfony.com/doc/current/security.html#the-firewall
+            logout:
+                # The name of the route to redirect to after logging out
+                target: homepage
+                # Secure the logout against CSRF
+                enable_csrf: true
 
-            # https://symfony.com/doc/current/security/impersonating_user.html
-            #switch_user: true
-            custom_authenticator: App\Security\UserAuthenticator
+            # needed because in tests we redefine the 'main' firewall to use
+            # HTTP Basic instead of the login form, so this firewall has
+            # multiple authenticators
+            # See https://symfony.com/doc/current/security/experimental_authenticators.html#configuring-the-authentication-entry-point
+            entry_point: 'form_login'
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-         - { path: ^/utilisateur, roles: ROLE_USER }
-         - { path: ^/admin, roles: ROLE_ADMIN }
-         - { path: ^/profile, roles: ROLE_USER }
+        #   - { path: '^/{_locale}/admin', roles: ROLE_ADMIN }
+          - { path: ^/utilisateur, roles: ROLE_USER }
 
-    # role_hierarchy:
-    #     ROLE_PRODUCT_ADMIN: ROLE_USER
+          - { path: ^/profile, roles: ROLE_USER }
+
+    role_hierarchy:
+          ROLE_ADMIN: ROLE_USER
     #     ROLE_ADMIN: ROLE_PRODUCT_ADMIN
     #     ROLE_SUPER_ADMIN: ROLE_ADMIN
 
@@ -77,3 +88,7 @@ when@test:
                 cost: 4 # Lowest possible value for bcrypt
                 time_cost: 3 # Lowest possible value for argon
                 memory_cost: 10 # Lowest possible value for argon
+
+        firewalls:
+            main:
+                http_basic: ~
