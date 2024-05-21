@@ -13,6 +13,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Security\Http\Authenticator\Passport\Badge\PreAuthenticatedUserBadge;
+use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -89,6 +91,13 @@ class RegistrationFormType extends AbstractType
                 ],
                  'label' => 'En m\'inscrivant à ce site j\'accepte...'
             ])
+            ->add('userBadge', HiddenType::class, [
+            'mapped' => false,
+            'constraints' => [
+                 new PreAuthenticatedUserBadge(),
+                ]
+            ])
+                
         ;
     }
 

@@ -34,13 +34,12 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var string The hashed password
      */
-    #[ORM\Column]
+    #[ORM\Column(type:'plain')]
     private ?string $password = null;
 
     #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
 
-    
 
     #[ORM\Column(length: 50)]
     private ?string $nom = null;
@@ -158,7 +157,7 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     public function eraseCredentials(): void
     {
         // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
+        //  $this->plainPassword = null;
     }
 
     public function isVerified(): bool
