@@ -26,12 +26,12 @@ return [
     '@symfony/stimulus-bundle' => [
         'path' => './vendor/symfony/stimulus-bundle/assets/dist/loader.js',
     ],
-    // '@hotwired/turbo' => [
-    //     'version' => '7.3.0',
-    // ],
-    // '@simplewebauthn/browser' => [
-    //     'version' => '7.4.0',
-    // ],   
+    '@hotwired/turbo' => [
+        'version' => '7.3.0',
+    ],
+    '@simplewebauthn/browser' => [
+        'version' => '7.4.0',
+    ],   
     'bootstrap/js/dist/alert' => [
         'version' => '4.6.2',
     ],

@@ -19,10 +19,13 @@ Encore // directory where compiled assets will be stored
  * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
  */
 .addEntry('app', './assets/app.js') // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
-.enableStimulusBridge('./assets/controllers.json').enableVueLoader() // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
-.splitEntryChunks() // will require an extra script tag for runtime.js
+.enableStimulusBridge('./assets/controllers.json')
+.enableVueLoader() // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
+//.splitEntryChunks()
+// will require an extra script tag for runtime.js
 // but, you probably want this, unless you're building a single-page app
-.enableSingleRuntimeChunk()
+//.enableSingleRuntimeChunk()
+
 /*
  * FEATURE CONFIG
  *
@@ -30,8 +33,12 @@ Encore // directory where compiled assets will be stored
  * list of features, see:
  * https://symfony.com/doc/current/frontend.html#adding-more-features
  */
-.cleanupOutputBeforeBuild().enableBuildNotifications().enableSourceMaps(!Encore.isProduction()) // enables hashed filenames (e.g. app.abc123.css)
-.enableVersioning(Encore.isProduction()) // configure Babel
+//.cleanupOutputBeforeBuild()
+//.enableBuildNotifications()
+//.enableSourceMaps(!Encore.isProduction())
+// enables hashed filenames (e.g. app.abc123.css)
+//.enableVersioning(Encore.isProduction())
+// configure Babel
 .configureBabel(function (config) {
   config.plugins.push('@babel/a-babel-plugin');
 }) // enables and configure @babel/preset-env polyfills
@@ -43,6 +50,7 @@ Encore // directory where compiled assets will be stored
 .enableTypeScriptLoader() // uncomment if you use React
 .enableReactPreset() // uncomment to get integrity="..." attributes on your script & link tags
 // requires WebpackEncoreBundle 1.4 or higher
-.enableIntegrityHashes(Encore.isProduction()) // uncomment if you're having problems with a jQuery plugin
+//.enableIntegrityHashes(Encore.isProduction())
+// uncomment if you're having problems with a jQuery plugin
 .autoProvidejQuery();
 module.exports = Encore.getWebpackConfig();

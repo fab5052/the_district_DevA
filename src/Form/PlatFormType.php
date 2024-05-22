@@ -36,7 +36,7 @@ class PlatFormType extends AbstractType
             ->add('stock', options:[
                 'label' => 'Unités en stock'
             ])
-            ->add('categories', EntityType::class, [
+            ->add('categorie', EntityType::class, [
                 'class' => Categorie::class,
                 'choice_label' => 'name',
                 'label' => 'Catégorie',
@@ -47,7 +47,7 @@ class PlatFormType extends AbstractType
                         ->orderBy('c.name', 'ASC');
                 }
             ])
-            ->add('images', FileType::class, [
+            ->add('image', FileType::class, [
                 'label' => false,
                 'multiple' => true,
                 'mapped' => false,

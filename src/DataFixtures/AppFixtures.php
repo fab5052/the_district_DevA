@@ -22,7 +22,6 @@ class AppFixtures extends Fixture
             $utilisateurDB 
              ->setEmail($utilisateurData['email']) 
              ->setPassword($utilisateurData['password'])
-            //  ->setUsername($utilisateurData['username'])
              ->setNom($utilisateurData['nom'])
              ->setPrenom($utilisateurData['prenom'])
              ->setTelephone($utilisateurData['telephone'])
@@ -36,6 +35,7 @@ class AppFixtures extends Fixture
         }
         $manager->flush();
 
+   include 'base.php';
 
         foreach ($categorie as $catData) {
             $categorieDB = new Categorie();
@@ -47,6 +47,8 @@ class AppFixtures extends Fixture
             $manager->persist($categorieDB);
         }
         $manager->flush();
+
+   include 'base.php';
 
         foreach ($plat as $platData) {
             $platDB = new Plat();
@@ -62,12 +64,12 @@ class AppFixtures extends Fixture
                 $platDB->setCategorie($categorie);
             }
 
-       
-          
 
             $manager->persist($platDB);
         }
         $manager->flush();
+
+   include 'base.php';
 
         foreach ($detail as $detailData) {
             $detailDB = new Detail();

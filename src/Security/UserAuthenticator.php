@@ -34,10 +34,10 @@ class UserAuthenticator extends AbstractLoginFormAuthenticator
 
         return new Passport(
             new UserBadge($email, $this->urlGenerator->generate(self::LOGIN_ROUTE)),
-            new PasswordCredentials($request->getPayload()->getString('password')),
+            new PasswordCredentials($request->getPayload()->getString('email')),
             [
                 new CsrfTokenBadge('authenticate', $request->getPayload()->getString('_csrf_token')),
-                new RememberMeBadge(),
+                // new RememberMeBadge(),
             ]
         );
     }
@@ -49,7 +49,7 @@ class UserAuthenticator extends AbstractLoginFormAuthenticator
         }
 
         // For example:
-        return new RedirectResponse($this->urlGenerator->generate('home'));
+        return new RedirectResponse($this->urlGenerator->generate('app_accueil'));
         // throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
     }
 

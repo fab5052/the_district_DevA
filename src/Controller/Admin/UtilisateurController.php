@@ -8,12 +8,13 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/admin/utilisateur', name: 'admin_user_')]
-class UserController extends AbstractController
+class UtilisateurController extends AbstractController
 {
-    #[Route('/', name: 'index')]
+    
+    #[Route('/', name: 'index')]#[Route('/admin/utilisateur', name: 'index')]
     public function index(UtilisateurRepository $utilisateurRepository): Response
     {
         $utilisateur = $utilisateurRepository->findBy([], ['firstname' => 'asc']);
-        return $this->render('admin/user/index.html.twig', compact('utilisateur'));
+        return $this->render('admin/utilisateur/index.html.twig', compact('utilisateur'));
     }
 }

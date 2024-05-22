@@ -91,12 +91,7 @@ class RegistrationFormType extends AbstractType
                 ],
                  'label' => 'En m\'inscrivant à ce site j\'accepte...'
             ])
-            ->add('userBadge', HiddenType::class, [
-            'mapped' => false,
-            'constraints' => [
-                 new PreAuthenticatedUserBadge(),
-                ]
-            ])
+           
                 
         ;
     }
