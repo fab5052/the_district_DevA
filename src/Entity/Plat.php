@@ -128,7 +128,7 @@ class Plat
     /**
      * @return Collection<int, Detail>
      */
-    public function getDetails(): Collection
+    public function getDetail(): Collection
     {
         return $this->details;
     }

@@ -7,7 +7,8 @@ use App\Entity\Plat;
 use App\Entity\Detail;
 use App\Entity\Commande;
 use App\Entity\Utilisateur;
-use App\Entity\Contact;
+//use App\Entity\Trait\CreatedAtTrait;
+//use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
@@ -99,14 +100,14 @@ class AppFixtures extends Fixture
         include 'base.php';
 
         foreach ($commande as $commandeData) {
-            $date = new \DateTime($commandeData['date_commande']);
+             $date = new \DateTime($commandeData['date_commande']);
             $commandeDB = new Commande();
             $commandeDB
                 ->setDateCommande($date)
                 ->setTotal($commandeData['total'])
                 ->setEtat($commandeData['etat']);
-            
-            $detail = $manager->getRepository(Detail::class)->find($commandeData['id_detail']);
+            $detail = $manager->getRepository(Detail::class)
+            ->find($commandeData['id_detail']);
             if ($detail) {
                 $commandeDB->addDetail($detail);
             }

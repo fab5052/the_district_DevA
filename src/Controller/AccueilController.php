@@ -6,7 +6,8 @@ use App\Repository\CategorieRepository;
 // use App\Repository\PlatRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Attribute\Route;
+
+use Symfony\Component\Routing\Annotation\Route;
 
 class AccueilController extends AbstractController
 {
@@ -14,7 +15,7 @@ class AccueilController extends AbstractController
     // private $platRepo;
 
     // public function __construct(CategorieRepository $categorieRepo, PlatRepository $platRepo)
-        public function __construct(CategorieRepository $categorieRepo)    {
+    public function __construct(CategorieRepository $categorieRepo)    {
         $this->categorieRepo = $categorieRepo;
         // $this->platRepo = $platRepo;
         
@@ -24,12 +25,12 @@ class AccueilController extends AbstractController
     #[Route('/accueil', name: 'app_accueil')]
     public function index(): Response
     {
-
         $categories = $this->categorieRepo->findAll();
         // $plats = $this->platRepo->findAll();
 
-        return $this->render('accueil/index.html.twig', [
-            'controller_name' => 'AccueilController',
+        return $this->render('accueil/index.html.twig' , [
+            'controller_name' => 
+            'AccueilController',
 
             'categories' => $categories
             // 'plats'=> $plats
