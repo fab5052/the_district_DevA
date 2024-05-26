@@ -91,7 +91,7 @@ class Detail
     {
         if ($this->plats->removeElement($plat)) {
             // set the owning side to null (unless already changed)
-            if ($plat->getDetails() === $this) {
+            if ($plat->getDetail() === $this) {
                 $plat->addDetail($this);
             }
         }
